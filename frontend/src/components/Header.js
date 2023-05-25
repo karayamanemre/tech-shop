@@ -6,10 +6,10 @@ import logo from '../assets/logo.png';
 const Header = () => {
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+      <Navbar bg="light" variant="light" expand="md" collapseOnSelect>
         <Container>
           <Navbar.Brand href="/">
-            <img src={logo} alt="TechShop" />
+            <img src={logo} alt="TechShop" width={50} height={50} />
             TechShop
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
