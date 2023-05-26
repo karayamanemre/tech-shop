@@ -1,0 +1,12 @@
+{
+  "name": "tech-shop",
+  "version": "1.0.0",
+  "description": "eCommerce app built with MERN stack",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emre Karayaman",
+  "license": "MIT"
+}
