@@ -8,20 +8,14 @@ const Product = ({ product }) => {
     <Card
       className="my-3 p-3 rounded"
       style={{
-        backgroundColor: '#999888',
+        backgroundColor: '#D1D0C7',
       }}
     >
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant="top" />
       </Link>
       <Card.Body>
-        <Link
-          to={`/product/${product._id}`}
-          style={{
-            textDecoration: 'none',
-            color: 'black',
-          }}
-        >
+        <Link to={`/product/${product._id}`}>
           <Card.Title as="div" className="product-title">
             <p>{product.name}</p>
           </Card.Title>
