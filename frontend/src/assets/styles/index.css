@@ -3,6 +3,7 @@
 * {
   font-family: 'indivisible', sans-serif;
 }
+
 main {
   min-height: 80vh;
 }
@@ -12,7 +13,7 @@ main {
 }
 
 .rating svg {
-  color: #f8e825;
+  color: #d3592a;
 }
 
 .rating-text {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { FaAngleLeft } from 'react-icons/fa';
 import {
   Form,
   Row,
@@ -37,7 +38,19 @@ const ProductScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link
+        className="btn my-3"
+        to="/"
+        style={{
+          backgroundColor: '#777182',
+          color: 'white',
+        }}
+      >
+        <FaAngleLeft
+          style={{
+            marginBottom: '3px',
+          }}
+        />
         Go Back
       </Link>
       {isLoading ? (

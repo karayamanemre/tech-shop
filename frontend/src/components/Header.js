@@ -10,8 +10,12 @@ const Header = () => {
   console.log(cartItems);
 
   return (
-    <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+    <header
+      style={{
+        backgroundColor: '#777182',
+      }}
+    >
+      <Navbar variant="dark" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
