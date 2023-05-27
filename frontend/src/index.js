@@ -9,7 +9,7 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import './assets/styles/index.css';
-import './assets/styles/bootstrap.custom.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';

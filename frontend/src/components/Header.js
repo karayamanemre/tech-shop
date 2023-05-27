@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="light" variant="light" expand="md" collapseOnSelect>
+      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -19,11 +19,7 @@ const Header = () => {
               TechShop
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle
-            bg="light"
-            variant="light"
-            aria-controls="basic-navbar-nav"
-          />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
