@@ -42,8 +42,8 @@ const ProductScreen = () => {
         className="btn my-3"
         to="/"
         style={{
-          backgroundColor: '#777182',
-          color: 'white',
+          backgroundColor: '#657A8C',
+          color: '#fff',
         }}
       >
         <FaAngleLeft
@@ -62,10 +62,27 @@ const ProductScreen = () => {
       ) : (
         <Row>
           <Col md={5}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image
+              src={product.image}
+              alt={product.name}
+              style={{
+                borderRadius: '5px',
+              }}
+              fluid
+            />
           </Col>
-          <Col md={4}>
-            <ListGroup variant="flush">
+          <Col
+            md={4}
+            style={{
+              borderRadius: '5px',
+            }}
+          >
+            <ListGroup
+              variant="flush"
+              style={{
+                borderRadius: '5px',
+              }}
+            >
               <ListGroup.Item>
                 <h3>{product.name}</h3>
               </ListGroup.Item>
