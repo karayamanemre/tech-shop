@@ -75,7 +75,7 @@ const LoginScreen = () => {
         <Col>
           New Customer?{' '}
           <Link
-            to={redirect ? `/redirect?redirect=${redirect}` : '/register'}
+            to={redirect ? `/register?redirect=${redirect}` : '/register'}
             className="text-decoration-none"
           >
             Register
