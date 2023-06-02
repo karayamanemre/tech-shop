@@ -39,14 +39,13 @@ const UserEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    e.preventDefault();
     try {
       await updateUser({ userId, name, email, isAdmin });
       toast.success('User updated successfully');
       refetch();
       navigate('/admin/userlist');
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
     }
   };
 
@@ -94,6 +93,9 @@ const UserEditScreen = () => {
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
+            <Button type='submit' variant='primary' className='my-2'>
+              Update
+            </Button>
           </Form>
         )}
       </FormContainer>
