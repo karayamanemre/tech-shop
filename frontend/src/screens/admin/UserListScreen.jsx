@@ -47,7 +47,11 @@ const UserListScreen = () => {
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
-                      <FaEdit />
+                      <FaEdit
+                        style={{
+                          marginRight: '5px',
+                        }}
+                      />
                     </Button>
                   </LinkContainer>
                   <Button
