@@ -1,8 +1,9 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Product from '../components/Product';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
+import { FaArrowCircleLeft } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
@@ -16,6 +17,17 @@ const HomeScreen = () => {
 
   return (
     <>
+      {keyword && (
+        <Link to='/' className='btn btn-light mb-2'>
+          <FaArrowCircleLeft
+            style={{
+              marginBottom: '3px',
+              marginRight: '5px',
+            }}
+          />
+          Back
+        </Link>
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
