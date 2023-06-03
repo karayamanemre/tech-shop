@@ -32,6 +32,7 @@ const Header = () => {
     <header
       style={{
         backgroundColor: '#657A8C',
+        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.5)',
       }}
     >
       <Navbar variant='dark' expand='md' collapseOnSelect>

@@ -46,7 +46,7 @@ const ProductScreen = () => {
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
-    navigate('/cart');
+    toast.success('Item added to cart');
   };
 
   const submitHandler = async (e) => {
@@ -181,6 +181,10 @@ const ProductScreen = () => {
                       type='button'
                       disabled={product.countInStock === 0}
                       onClick={addToCartHandler}
+                      style={{
+                        backgroundColor: '#D3592A',
+                        border: 'none',
+                      }}
                     >
                       Add To Cart
                     </Button>
@@ -236,8 +240,11 @@ const ProductScreen = () => {
                       </Form.Group>
                       <Button
                         type='submit'
-                        variant='primary'
                         disabled={loadingProductReview}
+                        style={{
+                          backgroundColor: '#657A8C',
+                          border: 'none',
+                        }}
                       >
                         Submit
                       </Button>
