@@ -2,6 +2,8 @@
 
 - TechShop is a eCommerce project that specializes in tech products. The platform is built using the MERN stack, consisting of MongoDB, Express.js, React.js, and Node.js. It's designed with a clean and user-friendly interface, aiming to provide an efficient, seamless shopping experience.
 
+- [Live Demo](https://techshop-ktlq.onrender.com/)
+
 ## Key Features
 
 - **User Authentication**: Includes secure user registration and login functionalities.
