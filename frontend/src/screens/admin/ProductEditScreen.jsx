@@ -11,6 +11,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
+import Meta from '../../components/Meta';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -87,6 +88,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
+      <Meta title={'TechShop Add Product'} />
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         <FaArrowAltCircleLeft
           style={{
@@ -129,7 +131,7 @@ const ProductEditScreen = () => {
                 type='text'
                 placeholder='Enter image url'
                 value={image}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => setImage}
               />
               <Form.Control
                 type='file'

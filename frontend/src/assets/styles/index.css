@@ -49,9 +49,22 @@ table th {
 
 .carousel-caption {
   position: absolute;
-  width: 100%;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  filter: invert(1);
+}
+
+.active .page-link {
+  background: #d3592a !important;
+  color: #fff !important;
+  outline: none;
+  border: none;
+}
+.page-link {
+  color: #000 !important;
+  outline: none;
+  border: none;
 }

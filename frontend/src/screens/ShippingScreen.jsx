@@ -5,6 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { saveShippingAddress } from '../slices/cartSlice';
 import CheckoutSteps from '../components/CheckoutSteps';
+import Meta from '../components/Meta';
 
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
@@ -28,50 +29,58 @@ const ShippingScreen = () => {
 
   return (
     <FormContainer>
+      <Meta title={'TechShop'} />
       <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId="address" className="my-2">
+        <Form.Group controlId='address' className='my-2'>
           <Form.Label>Address</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Enter address"
+            type='text'
+            placeholder='Enter address'
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="city" className="my-2">
+        <Form.Group controlId='city' className='my-2'>
           <Form.Label>City</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Enter city"
+            type='text'
+            placeholder='Enter city'
             value={city}
             onChange={(e) => setCity(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="postalCode" className="my-2">
+        <Form.Group controlId='postalCode' className='my-2'>
           <Form.Label>Postal Code</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Enter postal code"
+            type='text'
+            placeholder='Enter postal code'
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="country" className="my-2">
+        <Form.Group controlId='country' className='my-2'>
           <Form.Label>Country</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Enter country"
+            type='text'
+            placeholder='Enter country'
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="my-2">
+        <Button
+          type='submit'
+          style={{
+            backgroundColor: '#D3592A',
+            border: 'none',
+          }}
+          className='my-2'
+        >
           Continue
         </Button>
       </Form>

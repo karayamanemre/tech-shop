@@ -12,6 +12,7 @@ import {
   useDeleteProductMutation,
 } from '../../slices/productsApiSlice';
 import Paginate from '../../components/Paginate';
+import Meta from '../../components/Meta';
 
 const ProductListScreen = () => {
   const { pageNumber = 1 } = useParams();
@@ -50,13 +51,26 @@ const ProductListScreen = () => {
 
   return (
     <>
+      <Meta title={'TechShop Products'} />
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
         </Col>
         <Col className='text-end'>
-          <Button className='btn-sm m-3' onClick={createProductHandler}>
-            <FaEdit />
+          <Button
+            className='btn-sm m-3'
+            onClick={createProductHandler}
+            style={{
+              backgroundColor: '#D3592A',
+              border: 'none',
+            }}
+          >
+            <FaEdit
+              style={{
+                marginBottom: '3px',
+                marginRight: '5px',
+              }}
+            />
             Add Product
           </Button>
         </Col>

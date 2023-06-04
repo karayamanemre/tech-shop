@@ -3,11 +3,12 @@ import { Row, Col } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import Product from '../components/Product';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
-import { FaArrowCircleLeft } from 'react-icons/fa';
+import { FaAngleLeft } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/Meta';
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -19,16 +20,25 @@ const HomeScreen = () => {
   return (
     <>
       {!keyword ? (
-        <ProductCarousel />
+        <>
+          <h1>Top Rated Products</h1>
+          <ProductCarousel />
+        </>
       ) : (
-        <Link to='/' className='btn btn-light mb-2'>
-          <FaArrowCircleLeft
+        <Link
+          className='btn my-3'
+          to='/'
+          style={{
+            backgroundColor: '#657A8C',
+            color: '#fff',
+          }}
+        >
+          <FaAngleLeft
             style={{
               marginBottom: '3px',
-              marginRight: '5px',
             }}
           />
-          Back
+          Go Back
         </Link>
       )}
       {isLoading ? (
@@ -39,13 +49,16 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
+          <Meta title={'Welcome to TechShop'} />
           <h1>Latest Products</h1>
           <Row>
-            {data.products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product}></Product>
-              </Col>
-            ))}
+            {[...data.products]
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .map((product) => (
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Product product={product}></Product>
+                </Col>
+              ))}
           </Row>
           <Paginate
             pages={data.pages}

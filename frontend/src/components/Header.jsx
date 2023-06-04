@@ -59,7 +59,12 @@ const Header = () => {
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
-                  <LinkContainer to='/profile'>
+                  <LinkContainer
+                    to='/profile'
+                    activeStyle={{
+                      backgroundColor: '#D3592A',
+                    }}
+                  >
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
@@ -75,13 +80,28 @@ const Header = () => {
               )}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admin/orderlist'>
+                  <LinkContainer
+                    to='/admin/orderlist'
+                    activeStyle={{
+                      backgroundColor: '#D3592A',
+                    }}
+                  >
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/productlist'>
+                  <LinkContainer
+                    to='/admin/productlist'
+                    activeStyle={{
+                      backgroundColor: '#D3592A',
+                    }}
+                  >
                     <NavDropdown.Item>Products</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/userlist'>
+                  <LinkContainer
+                    to='/admin/userlist'
+                    activeStyle={{
+                      backgroundColor: '#D3592A',
+                    }}
+                  >
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>

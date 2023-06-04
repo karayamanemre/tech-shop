@@ -10,6 +10,7 @@ import {
   useGetUserDetailsQuery,
   useUpdateUserMutation,
 } from '../../slices/usersApiSlice';
+import Meta from '../../components/Meta';
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
@@ -51,6 +52,7 @@ const UserEditScreen = () => {
 
   return (
     <>
+      <Meta title='TechShop Edit User' />
       <Link to='/admin/userlist' className='btn btn-light my-3'>
         <FaArrowAltCircleLeft /> Go Back
       </Link>

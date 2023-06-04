@@ -9,6 +9,7 @@ import {
   useGetUsersQuery,
   useDeleteUserMutation,
 } from '../../slices/usersApiSlice';
+import Meta from '../../components/Meta';
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
@@ -28,6 +29,7 @@ const UserListScreen = () => {
 
   return (
     <>
+      <Meta title={'TechShop Users'} />
       <h1>Users</h1>
       {loadingDelete && <Loader />}
       {isLoading ? (
@@ -66,6 +68,7 @@ const UserListScreen = () => {
                       <FaEdit
                         style={{
                           marginRight: '5px',
+                          paddingBottom: '3px',
                         }}
                       />
                     </Button>
@@ -74,6 +77,9 @@ const UserListScreen = () => {
                     variant='danger'
                     className='btn-sm'
                     onClick={() => deleteHandler(user._id)}
+                    style={{
+                      marginLeft: '5px',
+                    }}
                   >
                     <FaTrash />
                   </Button>

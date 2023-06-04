@@ -8,6 +8,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
+import Meta from '../components/Meta';
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const PlaceOrderScreen = () => {
 
   return (
     <>
+      <Meta title={'TechShop'} />
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
@@ -83,7 +85,13 @@ const PlaceOrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            to={`/product/${item.product}`}
+                            style={{
+                              textDecoration: 'none',
+                              color: '#000',
+                            }}
+                          >
                             {item.name}
                           </Link>
                         </Col>
@@ -143,6 +151,10 @@ const PlaceOrderScreen = () => {
                   className='btn-block'
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
+                  style={{
+                    backgroundColor: '#D3592A',
+                    border: 'none',
+                  }}
                 >
                   Place Order
                 </Button>
