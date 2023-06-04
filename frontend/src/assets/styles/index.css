@@ -3,7 +3,19 @@
 }
 
 main {
-  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+header {
+  border-color: #d3592a !important;
+}
+
+.text-orange {
+  color: #d3592a !important;
+}
+
+.text-orange:hover {
+  color: #a9461e !important;
 }
 
 .rating span {
@@ -20,8 +32,8 @@ main {
   padding-left: 0.5rem;
 }
 
-.product-title {
-  height: 2.5em;
+.product-title-text {
+  margin-bottom: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

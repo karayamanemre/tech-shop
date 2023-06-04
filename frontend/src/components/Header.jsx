@@ -29,17 +29,18 @@ const Header = () => {
   };
 
   return (
-    <header
-      style={{
-        backgroundColor: '#657A8C',
-        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.5)',
-      }}
-    >
-      <Navbar variant='dark' expand='md' collapseOnSelect>
+    <header className='border-bottom border-3'>
+      <Navbar variant='light' expand='md' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
-              <img src={logo} alt='TechShop' width={50} height={50} />
+              <img
+                src={logo}
+                alt='TechShop'
+                width={50}
+                height={50}
+                className='me-2'
+              />
               TechShop
             </Navbar.Brand>
           </LinkContainer>
@@ -48,17 +49,21 @@ const Header = () => {
             <Nav className='ms-auto'>
               <SearchBox />
               <LinkContainer to='/cart'>
-                <Nav.Link>
-                  <FaShoppingCart /> Cart
+                <Nav.Link className='text-orange'>
+                  <FaShoppingCart className='me-1' /> Cart
                   {cartItems.length > 0 && (
-                    <Badge pill bg='success' style={{ marginLeft: '5px' }}>
+                    <Badge pill bg='danger' className='ms-2'>
                       {cartItems.reduce((a, c) => a + c.qty, 0)}
                     </Badge>
                   )}
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown
+                  title={userInfo.name}
+                  id='username'
+                  className='text-orange'
+                >
                   <LinkContainer
                     to='/profile'
                     activeStyle={{
@@ -73,13 +78,17 @@ const Header = () => {
                 </NavDropdown>
               ) : (
                 <LinkContainer to='/login'>
-                  <Nav.Link>
-                    <FaUser /> Sign In
+                  <Nav.Link className='text-orange'>
+                    <FaUser className='me-1' /> Sign In
                   </Nav.Link>
                 </LinkContainer>
               )}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
+                <NavDropdown
+                  title='Admin'
+                  id='adminmenu'
+                  className='text-orange'
+                >
                   <LinkContainer
                     to='/admin/orderlist'
                     activeStyle={{

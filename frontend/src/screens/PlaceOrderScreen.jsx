@@ -121,12 +121,19 @@ const PlaceOrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${cart.shippingPrice}</Col>
+                  <Col>
+                    ${cart.shippingPrice}
+                    {cart.itemsPrice < 500 ? (
+                      <small style={{ display: 'block', color: 'red' }}>
+                        Get free shipping for orders over $500!
+                      </small>
+                    ) : null}
+                  </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Tax</Col>
+                  <Col>Tax (15%)</Col>
                   <Col>${cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>

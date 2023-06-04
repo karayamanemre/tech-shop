@@ -18,26 +18,15 @@ const HomeScreen = () => {
   });
 
   return (
-    <>
+    <div>
       {!keyword ? (
         <>
-          <h1>Top Rated Products</h1>
+          <h1 className='display-8'>Top Rated Products</h1>
           <ProductCarousel />
         </>
       ) : (
-        <Link
-          className='btn my-3'
-          to='/'
-          style={{
-            backgroundColor: '#657A8C',
-            color: '#fff',
-          }}
-        >
-          <FaAngleLeft
-            style={{
-              marginBottom: '3px',
-            }}
-          />
+        <Link className='btn btn-dark my-3' to='/'>
+          <FaAngleLeft />
           Go Back
         </Link>
       )}
@@ -50,24 +39,33 @@ const HomeScreen = () => {
       ) : (
         <>
           <Meta title={'Welcome to TechShop'} />
-          <h1>Latest Products</h1>
+          <h1 className='display-8'>Latest Products</h1>
           <Row>
             {[...data.products]
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((product) => (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Col
+                  key={product._id}
+                  sm={12}
+                  md={6}
+                  lg={4}
+                  xl={3}
+                  className='border border-light shadow-sm p-3 bg-white rounded'
+                >
                   <Product product={product}></Product>
                 </Col>
               ))}
           </Row>
-          <Paginate
-            pages={data.pages}
-            page={data.page}
-            keyword={keyword ? keyword : ''}
-          />
+          <div className='d-flex justify-content-center'>
+            <Paginate
+              pages={data.pages}
+              page={data.page}
+              keyword={keyword ? keyword : ''}
+            />
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

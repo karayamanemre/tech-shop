@@ -25,8 +25,8 @@ const Product = ({ product }) => {
             color: '#000',
           }}
         >
-          <Card.Title as='div' className='product-title'>
-            <p>{product.name}</p>
+          <Card.Title as='div'>
+            <p className='product-title-text'>{product.name}</p>
           </Card.Title>
         </Link>
         <Card.Text as='div'>
