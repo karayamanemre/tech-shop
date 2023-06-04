@@ -32,10 +32,6 @@ app.get('/api/config/paypal', (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID }),
 );
 
-// Make uploads folder static
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
 if (process.env.NODE_ENV === 'production') {
   // Make frontend build folder static
   app.use(express.static(path.join(__dirname, '/frontend/build')));
@@ -49,6 +45,9 @@ if (process.env.NODE_ENV === 'production') {
     res.send('API is ready');
   });
 }
+
+// Serve images from the Render disk folder
+app.use('/images', express.static('/images'));
 
 // Error middleware
 app.use(notFound);
