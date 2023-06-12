@@ -50,13 +50,13 @@ const HomeScreen = () => {
                   md={6}
                   lg={4}
                   xl={3}
-                  className='border border-light shadow-sm p-3 bg-white rounded'
+                  className='p-2 bg-white rounded'
                 >
                   <Product product={product}></Product>
                 </Col>
               ))}
           </Row>
-          <div className='d-flex justify-content-center'>
+          <div className='d-flex mt-4 justify-content-center'>
             <Paginate
               pages={data.pages}
               page={data.page}
