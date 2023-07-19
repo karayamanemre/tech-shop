@@ -39,13 +39,13 @@
 
 #### Setting up the frontend
 
-5. Navigate into the frontend directory: `cd frontend`
-6. Install frontend dependencies: `npm install`
+4. Navigate into the frontend directory: `cd frontend`
+5. Install frontend dependencies: `npm install`
 
 #### Starting the servers
 
-7. Navigate back to the root directory: `cd ..`
-8. Start the development server: `npm run dev`
+6. Navigate back to the root directory: `cd ..`
+7. Start the development server: `npm run dev`
 
 > Note: You need to add your own `.env` file in the root folder with the necessary environment variables for the project to work.
 
