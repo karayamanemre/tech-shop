@@ -42,7 +42,7 @@ const UserEditScreen = () => {
     e.preventDefault();
     try {
       await updateUser({ userId, name, email, isAdmin });
-      toast.success('User updated successfully');
+      toast.success('Kullanıcı güncellendi');
       refetch();
       navigate('/admin/userlist');
     } catch (error) {
@@ -57,7 +57,7 @@ const UserEditScreen = () => {
         <FaArrowAltCircleLeft /> Go Back
       </Link>
       <FormContainer>
-        <h1>Edit User</h1>
+        <h1>Kullanıcıyı düzenle</h1>
         {loadingUpdate && <Loader />}
 
         {isLoading ? (
@@ -69,7 +69,7 @@ const UserEditScreen = () => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name' className='my-2'>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Ad / ürün adı</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter name'
@@ -79,7 +79,7 @@ const UserEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='email' className='my-2'>
-              <Form.Label>Email Address</Form.Label>
+              <Form.Label>E-posta</Form.Label>
               <Form.Control
                 type='email'
                 placeholder='Enter email'
@@ -90,13 +90,13 @@ const UserEditScreen = () => {
             <Form.Group controlId='isAdmin' className='my-2'>
               <Form.Check
                 type='checkbox'
-                label='Is Admin'
+                label='Yönetici'
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
             <Button type='submit' variant='primary' className='my-2'>
-              Update
+              Kaydet
             </Button>
           </Form>
         )}

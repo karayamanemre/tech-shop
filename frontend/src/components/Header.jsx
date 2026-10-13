@@ -1,126 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, Container, Badge, NavDropdown } from 'react-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { FiShoppingBag, FiUser, FiArrowUpRight } from 'react-icons/fi';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
+import { apiSlice } from '../slices/apiSlice';
 import SearchBox from './SearchBox';
-import logo from '../assets/logo.png';
-
-const Header = () => {
-  const { cartItems } = useSelector((state) => state.cart);
-  const { userInfo } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [logoutApiCall] = useLogoutMutation();
-
-  const logoutHandler = async () => {
-    try {
-      await logoutApiCall().unwrap();
-      dispatch(logout());
-      navigate('/login');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <header className='border-bottom border-3'>
-      <Navbar variant='light' expand='md' collapseOnSelect>
-        <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>
-              <img
-                src={logo}
-                alt='TechShop'
-                width={50}
-                height={50}
-                className='me-2'
-              />
-              TechShop
-            </Navbar.Brand>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <SearchBox />
-              <LinkContainer to='/cart'>
-                <Nav.Link className='text-orange'>
-                  <FaShoppingCart className='me-1' /> Cart
-                  {cartItems.length > 0 && (
-                    <Badge pill bg='danger' className='ms-2'>
-                      {cartItems.reduce((a, c) => a + c.qty, 0)}
-                    </Badge>
-                  )}
-                </Nav.Link>
-              </LinkContainer>
-              {userInfo ? (
-                <NavDropdown
-                  title={userInfo.name}
-                  id='username'
-                  className='text-orange'
-                >
-                  <LinkContainer
-                    to='/profile'
-                    activeStyle={{
-                      backgroundColor: '#D3592A',
-                    }}
-                  >
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <LinkContainer to='/login'>
-                  <Nav.Link className='text-orange'>
-                    <FaUser className='me-1' /> Sign In
-                  </Nav.Link>
-                </LinkContainer>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown
-                  title='Admin'
-                  id='adminmenu'
-                  className='text-orange'
-                >
-                  <LinkContainer
-                    to='/admin/orderlist'
-                    activeStyle={{
-                      backgroundColor: '#D3592A',
-                    }}
-                  >
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer
-                    to='/admin/productlist'
-                    activeStyle={{
-                      backgroundColor: '#D3592A',
-                    }}
-                  >
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer
-                    to='/admin/userlist'
-                    activeStyle={{
-                      backgroundColor: '#D3592A',
-                    }}
-                  >
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </header>
-  );
-};
-
-export default Header;
+export default function Header(){
+ const {cartItems}=useSelector(s=>s.cart);const {userInfo}=useSelector(s=>s.auth);const dispatch=useDispatch();const navigate=useNavigate();const [logOut]=useLogoutMutation();
+ async function exit(){try{await logOut().unwrap();dispatch(logout());dispatch(apiSlice.util.resetApiState());navigate('/');}catch{alert('Çıkış yapılamadı. Lütfen tekrar dene.');}}
+ return <><div className="announcement"><span>Teknoloji mağazası · Portfolyo demosu</span><a href="https://github.com/karayamanemre/tech-shop" target="_blank" rel="noreferrer">Projeyi incele <FiArrowUpRight/></a></div><header className="shop-header"><Navbar expand="lg" collapseOnSelect><Container><Navbar.Brand as={Link} to="/" className="wordmark"><span className="brand-icon">t.</span>techshop<span className="brand-dot">®</span></Navbar.Brand><Navbar.Toggle aria-controls="shop-navigation"/><Navbar.Collapse id="shop-navigation"><Nav className="main-nav"><Nav.Link as={Link} to="/">Keşfet</Nav.Link><Nav.Link as={Link} to="/?category=Bilgisayar#catalog">Bilgisayar</Nav.Link><Nav.Link as={Link} to="/?category=Ses#catalog">Ses & aksesuar</Nav.Link></Nav><SearchBox/><Nav className="account-nav">{userInfo?<NavDropdown title={<><FiUser/> {userInfo.name.split(' ')[0]}</>} id="user-menu"><NavDropdown.Item as={Link} to="/profile">Hesabım & siparişler</NavDropdown.Item><NavDropdown.Item onClick={exit}>Çıkış yap</NavDropdown.Item><NavDropdown.Item disabled>{userInfo.email}</NavDropdown.Item></NavDropdown>:<Nav.Link as={Link} to="/login" aria-label="Giriş yap"><FiUser/><span>Giriş yap</span></Nav.Link>}{userInfo?.isAdmin&&<NavDropdown title="Yönetim" id="admin-menu"><NavDropdown.Item as={Link} to="/admin/productlist">Ürünler</NavDropdown.Item><NavDropdown.Item as={Link} to="/admin/orderlist">Siparişler</NavDropdown.Item><NavDropdown.Item as={Link} to="/admin/userlist">Kullanıcılar</NavDropdown.Item></NavDropdown>}<Nav.Link as={Link} to="/cart" className="cart-link"><FiShoppingBag/> <span>Sepet</span><b>{cartItems.reduce((n,p)=>n+p.qty,0)}</b></Nav.Link></Nav></Navbar.Collapse></Container></Navbar></header></>;
+}

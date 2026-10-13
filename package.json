@@ -1,32 +1,36 @@
 {
   "name": "tech-shop",
-  "version": "1.0.0",
-  "description": "eCommerce app built with MERN stack",
+  "version": "2.0.0",
+  "private": true,
   "type": "module",
-  "main": "server.js",
-  "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:import": "node backend/seeder.js",
-    "data:destroy": "node backend/seeder.js -d",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+  "workspaces": [
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=22.12"
   },
-  "author": "Emre Karayaman",
-  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/migrate.mjs && npm run build --workspace frontend",
+    "build:frontend": "npm run build --workspace frontend",
+    "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
+    "start": "node backend/server.js",
+    "dev": "concurrently \"node --env-file=.env.local --watch backend/server.js\" \"npm run dev --workspace frontend\"",
+    "test": "node --test tests/*.test.mjs"
+  },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.2.1",
-    "multer": "^1.4.5-lts.1"
+    "@neondatabase/serverless": "^1.2.0",
+    "@vercel/blob": "^2.8.1",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "multer": "^2.0.2",
+    "sharp": "^0.35.5",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "concurrently": "^8.0.1",
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
-  }
+    "concurrently": "^9.2.1"
+  },
+  "author": "Emre Karayaman",
+  "license": "MIT"
 }

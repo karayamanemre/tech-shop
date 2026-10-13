@@ -18,7 +18,7 @@ const UserListScreen = () => {
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure?')) {
       try {
-        await deleteUser(id);
+        await deleteUser(id).unwrap();
         refetch();
         toast.success('User deleted');
       } catch (error) {
@@ -30,18 +30,18 @@ const UserListScreen = () => {
   return (
     <>
       <Meta title={'TechShop Users'} />
-      <h1>Users</h1>
+      <h1>Kullanıcılar</h1>
       {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>NAME</th>
+              <th>Kod</th>
+              <th>AD</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
               <th></th>
@@ -81,7 +81,7 @@ const UserListScreen = () => {
                       marginLeft: '5px',
                     }}
                   >
-                    <FaTrash />
+                    <FaTrash aria-label='Kaldır' />
                   </Button>
                 </td>
               </tr>

@@ -21,7 +21,9 @@ export const updateCart = (state) => {
     Number(state.taxPrice)
   ).toFixed(2);
 
-  localStorage.setItem('cart', JSON.stringify(state));
+  localStorage.setItem('techshop-cart-v2', JSON.stringify(state));
 
   return state;
 };
+
+export function totals(items) { const cents=items.reduce((s,x)=>s+Math.round(x.price*100)*x.qty,0);const shipping=items.length?(cents>50000?0:1000):0;const tax=Math.round(cents*.15);return {itemsPrice:cents/100,shippingPrice:shipping/100,taxPrice:tax/100,totalPrice:(cents+shipping+tax)/100}; }

@@ -66,15 +66,16 @@ const ProductEditScreen = () => {
 
     const result = await updateProduct(updatedProduct);
     if (result.error) {
-      toast.error(result.error);
+      toast.error(result.error?.data?.message || 'Güncelleme başarısız.');
     } else {
-      toast.success('Product Updated');
+      toast.success('Ürün güncellendi');
       refetch();
       navigate('/admin/productlist');
     }
   };
 
   const uploadFileHandler = async (e) => {
+    if (!e.target.files?.[0]) return;
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
     try {
@@ -95,19 +96,19 @@ const ProductEditScreen = () => {
             marginBottom: '3px',
           }}
         />{' '}
-        Go Back
+        Geri dön
       </Link>
       <FormContainer>
-        <h1>Edit Product</h1>
+        <h1>Ürünü düzenle</h1>
         {loadingUpdate && <Loader />}
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>{error}</Message>
+          <Message variant='danger'>{error?.data?.message || error.error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name' className='my-2'>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Ad / ürün adı</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter name'
@@ -116,9 +117,9 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='price' className='my-2'>
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Fiyat (USD)</Form.Label>
               <Form.Control
-                type='number'
+                type='number' step='0.01' min='0' required
                 placeholder='Enter price'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -126,15 +127,15 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Görsel</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter image url'
                 value={image}
-                onChange={(e) => setImage}
+                onChange={(e) => setImage(e.target.value)}
               />
               <Form.Control
-                type='file'
+                type='file' accept='image/jpeg,image/png,image/webp'
                 label='Choose File'
                 onChange={uploadFileHandler}
               />
@@ -142,7 +143,7 @@ const ProductEditScreen = () => {
             {loadingUpload && <Loader />}
 
             <Form.Group controlId='brand' className='my-2'>
-              <Form.Label>Brand</Form.Label>
+              <Form.Label>Marka</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter brand'
@@ -152,9 +153,9 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='countInStock' className='my-2'>
-              <Form.Label>Count In Stock</Form.Label>
+              <Form.Label>Demo stok adedi</Form.Label>
               <Form.Control
-                type='number'
+                type='number' step='1' min='0' max='500' required
                 placeholder='Enter countInStock'
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
@@ -162,7 +163,7 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='category' className='my-2'>
-              <Form.Label>Category</Form.Label>
+              <Form.Label>Kategori</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter category'
@@ -171,7 +172,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='description' className='my-2'>
-              <Form.Label>Description</Form.Label>
+              <Form.Label>Açıklama</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter description'
@@ -180,7 +181,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
             <Button type='submit' variant='primary' className='my-2'>
-              Update
+              Kaydet
             </Button>
           </Form>
         )}

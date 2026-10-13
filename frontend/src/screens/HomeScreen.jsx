@@ -1,72 +1,13 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { useParams, Link } from 'react-router-dom';
+import {Link,useParams,useSearchParams} from 'react-router-dom';
+import {FiArrowUpRight,FiArrowRight,FiGrid,FiHeadphones,FiMonitor,FiSmartphone,FiTablet,FiWatch,FiBox,FiShield,FiRefreshCw} from 'react-icons/fi';
+import {useGetProductsQuery} from '../slices/productsApiSlice';
 import Product from '../components/Product';
-import { useGetProductsQuery } from '../slices/productsApiSlice';
-import { FaAngleLeft } from 'react-icons/fa';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import Paginate from '../components/Paginate';
-import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
-
-const HomeScreen = () => {
-  const { pageNumber, keyword } = useParams();
-  const { data, isLoading, error } = useGetProductsQuery({
-    keyword,
-    pageNumber,
-  });
-
-  return (
-    <div>
-      {!keyword ? (
-        <>
-          <h1 className='display-8'>Top Rated Products</h1>
-          <ProductCarousel />
-        </>
-      ) : (
-        <Link className='btn btn-dark my-3' to='/'>
-          <FaAngleLeft />
-          Go Back
-        </Link>
-      )}
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>
-          {error?.data?.message || error.error}
-        </Message>
-      ) : (
-        <>
-          <Meta title={'Welcome to TechShop'} />
-          <h1 className='display-8'>Latest Products</h1>
-          <Row>
-            {[...data.products]
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-              .map((product) => (
-                <Col
-                  key={product._id}
-                  sm={12}
-                  md={6}
-                  lg={4}
-                  xl={3}
-                  className='p-2 bg-white rounded'
-                >
-                  <Product product={product}></Product>
-                </Col>
-              ))}
-          </Row>
-          <div className='d-flex mt-4 justify-content-center'>
-            <Paginate
-              pages={data.pages}
-              page={data.page}
-              keyword={keyword ? keyword : ''}
-            />
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
-export default HomeScreen;
+const icons={Bilgisayar:FiMonitor,Telefon:FiSmartphone,Tablet:FiTablet,Ses:FiHeadphones,Giyilebilir:FiWatch,Aksesuar:FiBox};
+export default function HomeScreen(){
+ const {keyword}=useParams();const [params,setParams]=useSearchParams();const category=params.get('category')||'';const sort=params.get('sort')||'featured';const pageNumber=Number(params.get('page')||1);const {data,isLoading,isFetching,error,refetch}=useGetProductsQuery({keyword,pageNumber,category,sort});
+ function filter(k,v){const p=new URLSearchParams(params);v?p.set(k,v):p.delete(k);p.delete('page');setParams(p);}
+ return <><Meta title="TechShop — Teknoloji, hayatına uyum sağlar."/>{!keyword&&!category&&<section className="hero"><div className="hero-copy"><span className="eyebrow"><i/> GÜNLÜK HAYATIN, BİR ÜST SEVİYEDE.</span><h1>İyi teknoloji.<br/><span>Daha iyi bir gün.</span></h1><p>Üret, dinle, keşfet. Hayatına uyum sağlayan<br className="desktop-break"/> teknolojiyle kendi ritmini bul.</p><a href="#catalog" className="hero-cta">Koleksiyonu keşfet <FiArrowUpRight/></a><div className="hero-note"><span className="tiny-stack"><FiHeadphones/><FiMonitor/><FiSmartphone/></span><span>Özenle seçilmiş <b>24 ürün</b><br/>Birlikte daha iyi çalışan detaylar.</span></div></div><div className="hero-art"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><span className="hero-art-label">DAHA AZ GÜRÜLTÜ.<br/>DAHA ÇOK SEN.</span><img src="/catalog/101-1.webp" alt="Gümüş renkli AirPods Max kulaklık" width="600" height="600" fetchPriority="high"/><div className="floating-product"><div><small>SEÇKİDEN BİR PARÇA</small><strong>AirPods Max</strong><span>Sesin yeni boyutu.</span></div><Link to="/search/AirPods%20Max" aria-label="AirPods Max ürününü incele"><FiArrowUpRight/></Link></div><span className="hero-number">01 / TECHSHOP SELECT</span></div></section>}<section className="benefits" aria-label="Demo mağaza özellikleri"><div><FiBox/><span><strong>Senin için bir seçki</strong><small>Bilgisayardan küçük aksesuarlara</small></span></div><div><FiShield/><span><strong>Rahatça dene</strong><small>Gerçek ödeme alınmaz</small></span></div><div><FiRefreshCw/><span><strong>Baştan sona deneyim</strong><small>Sepet, demo sipariş ve takip</small></span></div></section><section id="catalog" className="catalog"><div className="section-heading"><div><span className="eyebrow">BİR SONRAKİ FAVORİN BURADA</span><h2>{keyword?`“${keyword}” için sonuçlar`:category||'Gününe eşlik edecekler.'}</h2></div><p>{data?`${data.total} ürün · Demo fiyatlar USD`: 'Koleksiyon yükleniyor'}</p></div><div className="catalog-controls"><div className="category-filters"><button className={!category?'selected':''} onClick={()=>filter('category','')}><FiGrid/>Tümü</button>{(data?.categories||Object.keys(icons)).map(c=>{const Icon=icons[c]||FiBox;return <button key={c} className={category===c?'selected':''} onClick={()=>filter('category',c)}><Icon/>{c}</button>;})}</div><select aria-label="Ürünleri sırala" value={sort} onChange={e=>filter('sort',e.target.value)}><option value="featured">Öne çıkanlar</option><option value="price-asc">Fiyat: düşükten yükseğe</option><option value="price-desc">Fiyat: yüksekten düşüğe</option><option value="name">İsim: A–Z</option></select></div>{error?<div className="empty-state"><h3>Koleksiyona şu an ulaşamadık.</h3><p>Lütfen tekrar dene.</p><button onClick={refetch} className="btn btn-primary">Yeniden dene</button></div>:isLoading?<div className="product-grid">{Array.from({length:8},(_,i)=><div className="product-skeleton" key={i}/>)}</div>:<><div className={`product-grid ${isFetching?'is-fetching':''}`}>{data.products.map(p=><Product key={p._id} product={p}/>)}</div>{!data.products.length&&<div className="empty-state"><FiSearchFallback/><h3>Aradığın ürün burada yok.</h3><p>Başka bir kelime ya da kategori deneyebilirsin.</p><Link to="/" className="btn btn-primary">Tüm ürünlere dön</Link></div>}{data.pages>1&&<nav className="pagination-row" aria-label="Ürün sayfaları"><button disabled={pageNumber<=1} onClick={()=>{const p=new URLSearchParams(params);p.set('page',pageNumber-1);setParams(p);document.getElementById('catalog').scrollIntoView();}}>← Önceki</button>{Array.from({length:data.pages},(_,i)=><button key={i} className={pageNumber===i+1?'active':''} aria-current={pageNumber===i+1?'page':undefined} onClick={()=>{const p=new URLSearchParams(params);p.set('page',i+1);setParams(p);document.getElementById('catalog').scrollIntoView();}}>{i+1}</button>)}<button disabled={pageNumber>=data.pages} onClick={()=>{const p=new URLSearchParams(params);p.set('page',pageNumber+1);setParams(p);document.getElementById('catalog').scrollIntoView();}}>Sonraki →</button></nav>}</>}</section><section className="editorial-banner"><div><span className="eyebrow">KÜÇÜK DETAYLAR, BÜYÜK FARKLAR.</span><h2>Masana biraz<br/>ilham kat.</h2><Link to="/?category=Bilgisayar#catalog">Çalışma alanını keşfet <FiArrowRight/></Link></div><img src="/catalog/78-1.webp" alt="MacBook Pro dizüstü bilgisayar" width="500" height="400" loading="lazy"/><span className="editorial-stamp">WORK.<br/>CREATE.<br/>REPEAT.</span></section></>;
+}
+function FiSearchFallback(){return <FiGrid size={32}/>;}

@@ -13,16 +13,16 @@ const OrderListScreen = () => {
   return (
     <>
       <Meta title={'TechShop Orders'} />
-      <h1>Orders</h1>
+      <h1>Demo siparişler</h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Kod</th>
               <th>User</th>
               <th>Date</th>
               <th>Total</th>
@@ -39,8 +39,8 @@ const OrderListScreen = () => {
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>${order.totalPrice}</td>
                 <td>
-                  {order.isPaid ? (
-                    order.paidAt.substring(0, 10)
+                  {order.demoCompleted ? (
+                    order.demoCompletedAt.substring(0, 10)
                   ) : (
                     <FaTimes style={{ color: 'red' }} />
                   )}

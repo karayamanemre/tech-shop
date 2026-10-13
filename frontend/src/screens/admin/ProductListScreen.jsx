@@ -27,10 +27,10 @@ const ProductListScreen = () => {
     useDeleteProductMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
+    if (window.confirm('Bu ürünü kaldırmak istediğine emin misin?')) {
       try {
-        await deleteProduct(id);
-        toast.success('Product deleted successfully');
+        await deleteProduct(id).unwrap();
+        toast.success('Ürün kaldırıldı');
         refetch();
       } catch (error) {
         toast.error(error?.data?.message || error.error);
@@ -39,9 +39,9 @@ const ProductListScreen = () => {
   };
 
   const createProductHandler = async () => {
-    if (window.confirm('Are you sure you want to add a new product?')) {
+    if (window.confirm('Yeni ürün eklemek istediğine emin misin?')) {
       try {
-        await createProduct();
+        await createProduct().unwrap();
         refetch();
       } catch (error) {
         toast.error(error?.data?.message || error.error);
@@ -54,7 +54,7 @@ const ProductListScreen = () => {
       <Meta title={'TechShop Products'} />
       <Row className='align-items-center'>
         <Col>
-          <h1>Products</h1>
+          <h1>Ürünler</h1>
         </Col>
         <Col className='text-end'>
           <Button
@@ -71,7 +71,7 @@ const ProductListScreen = () => {
                 marginRight: '5px',
               }}
             />
-            Add Product
+            Ürün ekle
           </Button>
         </Col>
       </Row>
@@ -80,17 +80,17 @@ const ProductListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : (
         <>
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
+                <th>Kod</th>
+                <th>AD</th>
+                <th>FİYAT</th>
+                <th>KATEGORİ</th>
+                <th>MARKA</th>
                 <th></th>
               </tr>
             </thead>
@@ -105,7 +105,7 @@ const ProductListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant='light' className='btn-sm mx-2'>
-                        <FaEdit />
+                        <FaEdit aria-label='Düzenle' />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -113,7 +113,7 @@ const ProductListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(product._id)}
                     >
-                      <FaTrash />
+                      <FaTrash aria-label='Kaldır' />
                     </Button>
                   </td>
                 </tr>

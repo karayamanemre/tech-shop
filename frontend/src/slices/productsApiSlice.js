@@ -4,11 +4,13 @@ import { apiSlice } from './apiSlice';
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ keyword, pageNumber }) => ({
+      query: ({ keyword, pageNumber, category, sort }) => ({
         url: PRODUCTS_URL,
         params: {
           pageNumber,
           keyword,
+          category,
+          sort,
         },
       }),
       keepUnusedDataFor: 5,
@@ -25,7 +27,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         url: PRODUCTS_URL,
         method: 'POST',
       }),
-      invalidatesTags: ['Product'],
+      invalidatesTags: ['Products'],
     }),
     updateProduct: builder.mutation({
       query: (data) => ({
@@ -54,7 +56,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Product'],
+      invalidatesTags: ['Products'],
     }),
     getTopProducts: builder.query({
       query: () => ({
