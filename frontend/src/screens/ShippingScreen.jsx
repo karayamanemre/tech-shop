@@ -1,2 +1,82 @@
-import React,{useState} from 'react';import {useDispatch,useSelector} from 'react-redux';import {useNavigate} from 'react-router-dom';import FormContainer from '../components/FormContainer';import CheckoutSteps from '../components/CheckoutSteps';import {saveShippingAddress} from '../slices/cartSlice';
-export default function ShippingScreen(){const {shippingAddress,cartItems}=useSelector(s=>s.cart);const [fields,setFields]=useState({address:shippingAddress.address||'',city:shippingAddress.city||'',postalCode:shippingAddress.postalCode||'',country:shippingAddress.country||''});const dispatch=useDispatch();const navigate=useNavigate();if(!cartItems.length)return <div className="empty-state"><h2>Your cart is empty.</h2><button className="btn btn-primary" onClick={()=>navigate('/')}>Explore products</button></div>;return <FormContainer><CheckoutSteps step1 step2/><h1>Shipping details</h1><p className="small-note">No real delivery is made. Use fictional details to try the checkout flow.</p><button type="button" className="btn btn-outline-primary mb-3" onClick={()=>setFields({address:'24 Demo Street',city:'Istanbul',postalCode:'34000',country:'Turkey'})}>Use a sample address</button><form onSubmit={e=>{e.preventDefault();dispatch(saveShippingAddress(fields));navigate('/payment');}}>{[['address','Address',3,200],['city','City',2,80],['postalCode','Postal code',2,20],['country','Country',2,80]].map(([k,label,min,max])=><div className="mb-3" key={k}><label className="form-label" htmlFor={k}>{label}</label><input className="form-control" id={k} required minLength={min} maxLength={max} value={fields[k]} onChange={e=>setFields({...fields,[k]:e.target.value})}/></div>)}<button className="btn btn-primary w-100">Continue to demo payment →</button></form></FormContainer>;}
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import FormContainer from '../components/FormContainer';
+import CheckoutSteps from '../components/CheckoutSteps';
+import { saveShippingAddress } from '../slices/cartSlice';
+export default function ShippingScreen() {
+  const { shippingAddress, cartItems } = useSelector((s) => s.cart);
+  const [fields, setFields] = useState({
+    address: shippingAddress.address || '',
+    city: shippingAddress.city || '',
+    postalCode: shippingAddress.postalCode || '',
+    country: shippingAddress.country || '',
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  if (!cartItems.length)
+    return (
+      <div className="empty-state">
+        <h2>Your cart is empty.</h2>
+        <button className="btn btn-primary" onClick={() => navigate('/')}>
+          Explore products
+        </button>
+      </div>
+    );
+  return (
+    <FormContainer>
+      <CheckoutSteps step1 step2 />
+      <h1>Shipping details</h1>
+      <p className="small-note">
+        No real delivery is made. Use fictional details to try the checkout
+        flow.
+      </p>
+      <button
+        type="button"
+        className="btn btn-outline-primary mb-3"
+        onClick={() =>
+          setFields({
+            address: '24 Demo Street',
+            city: 'Istanbul',
+            postalCode: '34000',
+            country: 'Turkey',
+          })
+        }
+      >
+        Use a sample address
+      </button>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(saveShippingAddress(fields));
+          navigate('/payment');
+        }}
+      >
+        {[
+          ['address', 'Address', 3, 200],
+          ['city', 'City', 2, 80],
+          ['postalCode', 'Postal code', 2, 20],
+          ['country', 'Country', 2, 80],
+        ].map(([k, label, min, max]) => (
+          <div className="mb-3" key={k}>
+            <label className="form-label" htmlFor={k}>
+              {label}
+            </label>
+            <input
+              className="form-control"
+              id={k}
+              required
+              minLength={min}
+              maxLength={max}
+              value={fields[k]}
+              onChange={(e) => setFields({ ...fields, [k]: e.target.value })}
+            />
+          </div>
+        ))}
+        <button className="btn btn-primary w-100">
+          Continue to demo payment →
+        </button>
+      </form>
+    </FormContainer>
+  );
+}

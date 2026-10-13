@@ -1,2 +1,36 @@
-import React from 'react';import {useDispatch} from 'react-redux';import {useNavigate} from 'react-router-dom';import {savePaymentMethod} from '../slices/cartSlice';import FormContainer from '../components/FormContainer';import CheckoutSteps from '../components/CheckoutSteps';
-export default function PaymentScreen(){const dispatch=useDispatch();const navigate=useNavigate();return <FormContainer><CheckoutSteps step1 step2 step3/><span className="eyebrow">TRY IT WITH CONFIDENCE</span><h1>Demo payment</h1><p>This store is a portfolio project. You do not need card details and no money will be charged.</p><div className="demo-notice"><strong>Simulation</strong><p>Your order is saved to the database. You can complete the simulated purchase on the next screen.</p></div><button className="btn btn-primary" onClick={()=>{dispatch(savePaymentMethod('Demo'));navigate('/placeorder');}}>Review your order →</button></FormContainer>;}
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { savePaymentMethod } from '../slices/cartSlice';
+import FormContainer from '../components/FormContainer';
+import CheckoutSteps from '../components/CheckoutSteps';
+export default function PaymentScreen() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  return (
+    <FormContainer>
+      <CheckoutSteps step1 step2 step3 />
+      <h1>Demo payment</h1>
+      <p>
+        This store is a portfolio project. You do not need card details and no
+        money will be charged.
+      </p>
+      <div className="demo-notice">
+        <strong>Simulation</strong>
+        <p>
+          Your order is saved to the database. You can complete the simulated
+          purchase on the next screen.
+        </p>
+      </div>
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          dispatch(savePaymentMethod('Demo'));
+          navigate('/placeorder');
+        }}
+      >
+        Review your order →
+      </button>
+    </FormContainer>
+  );
+}

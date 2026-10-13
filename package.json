@@ -29,7 +29,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "prettier": "^3.9.10"
   },
   "author": "Emre Karayaman",
   "license": "MIT"

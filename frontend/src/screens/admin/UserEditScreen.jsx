@@ -52,8 +52,8 @@ const UserEditScreen = () => {
 
   return (
     <>
-      <Meta title='TechShop Edit User' />
-      <Link to='/admin/userlist' className='btn btn-light my-3'>
+      <Meta title="TechShop Edit User" />
+      <Link to="/admin/userlist" className="btn btn-light my-3">
         <FaArrowAltCircleLeft /> Go Back
       </Link>
       <FormContainer>
@@ -63,39 +63,39 @@ const UserEditScreen = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>
+          <Message variant="danger">
             {error?.data?.message || error.error}
           </Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name' className='my-2'>
+            <Form.Group controlId="name" className="my-2">
               <Form.Label>Name</Form.Label>
               <Form.Control
-                type='text'
-                placeholder='Enter name'
+                type="text"
+                placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='email' className='my-2'>
+            <Form.Group controlId="email" className="my-2">
               <Form.Label>Email</Form.Label>
               <Form.Control
-                type='email'
-                placeholder='Enter email'
+                type="email"
+                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Form.Group controlId='isAdmin' className='my-2'>
+            <Form.Group controlId="isAdmin" className="my-2">
               <Form.Check
-                type='checkbox'
-                label='Administrator'
+                type="checkbox"
+                label="Administrator"
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
-            <Button type='submit' variant='primary' className='my-2'>
+            <Button type="submit" variant="primary" className="my-2">
               Save
             </Button>
           </Form>

@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { updateCart } from '../utils/cartUtils';
 
-const emptyCart = {cartItems: [], shippingAddress: {}, paymentMethod: 'Demo'};
+const emptyCart = { cartItems: [], shippingAddress: {}, paymentMethod: 'Demo' };
 let initialState = emptyCart;
-try { const saved=JSON.parse(localStorage.getItem('techshop-cart-v2')); if(saved && Array.isArray(saved.cartItems)) initialState={...emptyCart,...saved}; } catch { localStorage.removeItem('techshop-cart-v2'); }
+try {
+  const saved = JSON.parse(localStorage.getItem('techshop-cart-v2'));
+  if (saved && Array.isArray(saved.cartItems))
+    initialState = { ...emptyCart, ...saved };
+} catch {
+  localStorage.removeItem('techshop-cart-v2');
+}
 
 const cartSlice = createSlice({
   name: 'techshop-cart-v2',
@@ -16,7 +22,7 @@ const cartSlice = createSlice({
 
       if (existItem) {
         state.cartItems = state.cartItems.map((x) =>
-          x._id === existItem._id ? item : x,
+          x._id === existItem._id ? item : x
         );
       } else {
         state.cartItems = [...state.cartItems, item];

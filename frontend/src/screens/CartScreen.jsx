@@ -1,2 +1,101 @@
-import React from 'react';import {useSelector,useDispatch} from 'react-redux';import {Link,useNavigate} from 'react-router-dom';import {FiTrash2,FiShoppingBag} from 'react-icons/fi';import {addToCart,removeFromCart} from '../slices/cartSlice';import {money} from '../utils/format';import {totals} from '../utils/cartUtils';
-export default function CartScreen(){const {cartItems}=useSelector(s=>s.cart);const dispatch=useDispatch();const navigate=useNavigate();const amounts=totals(cartItems);return <><span className="eyebrow">YOUR GOOD FINDS</span><h1 className="page-title">My cart <small>({cartItems.reduce((n,p)=>n+p.qty,0)})</small></h1>{!cartItems.length?<div className="empty-state panel"><FiShoppingBag size={40}/><h3>Your cart is empty.</h3><p>Find something to make your everyday better.</p><Link to="/" className="btn btn-primary">Explore the collection →</Link></div>:<div className="checkout-layout"><div className="panel">{cartItems.map(p=><div className="cart-item" key={p._id}><Link to={`/product/${p._id}`}><img src={p.image} alt={p.name}/></Link><div className="cart-item-copy"><small>{p.brand}</small><Link to={`/product/${p._id}`}>{p.name}</Link><span>{money(p.price)}</span></div><select aria-label={`${p.name} quantity`} value={p.qty} onChange={e=>dispatch(addToCart({...p,qty:Number(e.target.value)}))}>{Array.from({length:Math.min(20,p.countInStock)},(_,i)=><option key={i} value={i+1}>{i+1}</option>)}</select><strong>{money(p.price*p.qty)}</strong><button aria-label={`Remove ${p.name} from cart`} onClick={()=>dispatch(removeFromCart(p._id))}><FiTrash2/></button></div>)}<Link to="/" className="back-link">← Continue exploring</Link></div><aside className="panel order-summary"><h2>Cart summary</h2>{[['Products',amounts.itemsPrice],['Demo shipping',amounts.shippingPrice],['Demo tax (15%)',amounts.taxPrice]].map(([label,n])=><div className="summary-line" key={label}><span>{label}</span><b>{money(n)}</b></div>)}<div className="summary-line total"><span>Total</span><b>{money(amounts.totalPrice)}</b></div><p className="small-note">Demo rule: free shipping on orders over $500.</p><button className="btn btn-primary w-100" onClick={()=>navigate('/login?redirect=/shipping')}>Continue to checkout →</button><div className="demo-notice">Portfolio demo. No real payment is collected.</div></aside></div>}</>;}
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiTrash2, FiShoppingBag } from 'react-icons/fi';
+import { addToCart, removeFromCart } from '../slices/cartSlice';
+import { money } from '../utils/format';
+import { totals } from '../utils/cartUtils';
+export default function CartScreen() {
+  const { cartItems } = useSelector((s) => s.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const amounts = totals(cartItems);
+  return (
+    <>
+      <h1 className="page-title">
+        My cart <small>({cartItems.reduce((n, p) => n + p.qty, 0)})</small>
+      </h1>
+      {!cartItems.length ? (
+        <div className="empty-state panel">
+          <FiShoppingBag size={40} />
+          <h3>Your cart is empty.</h3>
+          <Link to="/" className="btn btn-primary">
+            Explore the collection →
+          </Link>
+        </div>
+      ) : (
+        <div className="checkout-layout">
+          <div className="panel">
+            {cartItems.map((p) => (
+              <div className="cart-item" key={p._id}>
+                <Link to={`/product/${p._id}`}>
+                  <img src={p.image} alt={p.name} />
+                </Link>
+                <div className="cart-item-copy">
+                  <small>{p.brand}</small>
+                  <Link to={`/product/${p._id}`}>{p.name}</Link>
+                  <span>{money(p.price)}</span>
+                </div>
+                <select
+                  aria-label={`${p.name} quantity`}
+                  value={p.qty}
+                  onChange={(e) =>
+                    dispatch(addToCart({ ...p, qty: Number(e.target.value) }))
+                  }
+                >
+                  {Array.from(
+                    { length: Math.min(20, p.countInStock) },
+                    (_, i) => (
+                      <option key={i} value={i + 1}>
+                        {i + 1}
+                      </option>
+                    )
+                  )}
+                </select>
+                <strong>{money(p.price * p.qty)}</strong>
+                <button
+                  aria-label={`Remove ${p.name} from cart`}
+                  onClick={() => dispatch(removeFromCart(p._id))}
+                >
+                  <FiTrash2 />
+                </button>
+              </div>
+            ))}
+            <Link to="/" className="back-link">
+              ← Continue exploring
+            </Link>
+          </div>
+          <aside className="panel order-summary">
+            <h2>Cart summary</h2>
+            {[
+              ['Products', amounts.itemsPrice],
+              ['Demo shipping', amounts.shippingPrice],
+              ['Demo tax (15%)', amounts.taxPrice],
+            ].map(([label, n]) => (
+              <div className="summary-line" key={label}>
+                <span>{label}</span>
+                <b>{money(n)}</b>
+              </div>
+            ))}
+            <div className="summary-line total">
+              <span>Total</span>
+              <b>{money(amounts.totalPrice)}</b>
+            </div>
+            <p className="small-note">
+              Demo rule: free shipping on orders over $500.
+            </p>
+            <button
+              className="btn btn-primary w-100"
+              onClick={() => navigate('/login?redirect=/shipping')}
+            >
+              Continue to checkout →
+            </button>
+            <div className="demo-notice">
+              Portfolio demo. No real payment is collected.
+            </div>
+          </aside>
+        </div>
+      )}
+    </>
+  );
+}

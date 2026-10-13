@@ -1,2 +1,26 @@
-import React from 'react';import {Link} from 'react-router-dom';
-export default function CheckoutSteps({step1,step2,step3,step4}){return <nav aria-label="Checkout steps" className="checkout-steps">{[['Account','/login',step1],['Shipping','/shipping',step2],['Demo payment','/payment',step3],['Order','/placeorder',step4]].map(([label,path,active],i)=>active?<Link to={path} key={path}><b>{i+1}</b>{label}</Link>:<span key={path}><b>{i+1}</b>{label}</span>)}</nav>;}
+import React from 'react';
+import { Link } from 'react-router-dom';
+export default function CheckoutSteps({ step1, step2, step3, step4 }) {
+  return (
+    <nav aria-label="Checkout steps" className="checkout-steps">
+      {[
+        ['Account', '/login', step1],
+        ['Shipping', '/shipping', step2],
+        ['Demo payment', '/payment', step3],
+        ['Order', '/placeorder', step4],
+      ].map(([label, path, active], i) =>
+        active ? (
+          <Link to={path} key={path}>
+            <b>{i + 1}</b>
+            {label}
+          </Link>
+        ) : (
+          <span key={path}>
+            <b>{i + 1}</b>
+            {label}
+          </span>
+        )
+      )}
+    </nav>
+  );
+}

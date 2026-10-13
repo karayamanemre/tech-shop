@@ -1,3 +1,155 @@
-import React,{useState,useEffect} from 'react';import {Link} from 'react-router-dom';import {useSelector,useDispatch} from 'react-redux';import {toast} from 'react-toastify';import {useProfileMutation} from '../slices/usersApiSlice';import {useGetMyOrdersQuery} from '../slices/ordersApiSlice';import {setCredentials} from '../slices/authSlice';import {money,date} from '../utils/format';import Loader from '../components/Loader';
-export default function ProfileScreen(){const {userInfo}=useSelector(s=>s.auth);const [fields,setFields]=useState({name:userInfo?.name||'',email:userInfo?.email||'',currentPassword:'',password:'',confirm:''});const dispatch=useDispatch();const [update,{isLoading:busy}]=useProfileMutation();const {data:orders,isLoading,error}=useGetMyOrdersQuery();useEffect(()=>setFields(f=>({...f,name:userInfo?.name||'',email:userInfo?.email||''})),[userInfo]);async function submit(e){e.preventDefault();if(fields.password!==fields.confirm)return toast.error('Passwords do not match.');try{const u=await update({name:fields.name,email:fields.email,currentPassword:fields.currentPassword,...(fields.password?{password:fields.password}:{})}).unwrap();dispatch(setCredentials(u));setFields(f=>({...f,password:'',confirm:'',currentPassword:''}));toast.success('Profile updated.');}catch(e){toast.error(e?.data?.message||'Could not update your profile.');}}
-return <><span className="eyebrow">YOUR OWN SPACE</span><h1 className="page-title">Hello, {userInfo?.name.split(' ')[0]}.</h1><div className="profile-layout"><div className="panel"><h2>My account</h2><form onSubmit={submit}>{[['name','Full name','text'],['email','Email','email'],['currentPassword','Current password','password'],['password','New password (optional)','password'],['confirm','Confirm new password','password']].map(([k,l,t])=><div className="mb-3" key={k}><label htmlFor={k} className="form-label">{l}</label><input id={k} className="form-control" type={t} required={k==='name'||k==='email'} minLength={k==='password'||k==='confirm'?10:undefined} maxLength={t==='password'?72:254} autoComplete={k==='password'||k==='confirm'?'new-password':k==='currentPassword'?'current-password':k} value={fields[k]} onChange={e=>setFields({...fields,[k]:e.target.value})}/></div>)}<p className="small-note">Enter your current password to change your email or password.</p><button className="btn btn-primary" disabled={busy}>Save changes</button></form></div><div className="panel"><h2>My demo orders</h2>{isLoading?<Loader/>:error?<p role="alert">{error?.data?.message}</p>:orders?.length?<div className="table-responsive"><table className="table"><thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th><th/></tr></thead><tbody>{orders.map(o=><tr key={o._id}><td>#{o._id.slice(0,8).toUpperCase()}</td><td>{date(o.createdAt)}</td><td>{money(o.totalPrice)}</td><td><span className={`status-pill ${o.demoCompleted?'complete':''}`}>{o.demoCompleted?'Demo completed':'Pending'}</span></td><td><Link to={`/order/${o._id}`}>View →</Link></td></tr>)}</tbody></table></div>:<div className="empty-state"><h3>Your first demo order is waiting.</h3><p>Add a product to your cart and try the checkout flow.</p><Link to="/" className="btn btn-primary">Explore products</Link></div>}</div></div></>;}
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useProfileMutation } from '../slices/usersApiSlice';
+import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
+import { setCredentials } from '../slices/authSlice';
+import { money, date } from '../utils/format';
+import Loader from '../components/Loader';
+export default function ProfileScreen() {
+  const { userInfo } = useSelector((s) => s.auth);
+  const [fields, setFields] = useState({
+    name: userInfo?.name || '',
+    email: userInfo?.email || '',
+    currentPassword: '',
+    password: '',
+    confirm: '',
+  });
+  const dispatch = useDispatch();
+  const [update, { isLoading: busy }] = useProfileMutation();
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
+  useEffect(
+    () =>
+      setFields((f) => ({
+        ...f,
+        name: userInfo?.name || '',
+        email: userInfo?.email || '',
+      })),
+    [userInfo]
+  );
+  async function submit(e) {
+    e.preventDefault();
+    if (fields.password !== fields.confirm)
+      return toast.error('Passwords do not match.');
+    try {
+      const u = await update({
+        name: fields.name,
+        email: fields.email,
+        currentPassword: fields.currentPassword,
+        ...(fields.password ? { password: fields.password } : {}),
+      }).unwrap();
+      dispatch(setCredentials(u));
+      setFields((f) => ({
+        ...f,
+        password: '',
+        confirm: '',
+        currentPassword: '',
+      }));
+      toast.success('Profile updated.');
+    } catch (e) {
+      toast.error(e?.data?.message || 'Could not update your profile.');
+    }
+  }
+  return (
+    <>
+      <h1 className="page-title">Hello, {userInfo?.name.split(' ')[0]}.</h1>
+      <div className="profile-layout">
+        <div className="panel">
+          <h2>My account</h2>
+          <form onSubmit={submit}>
+            {[
+              ['name', 'Full name', 'text'],
+              ['email', 'Email', 'email'],
+              ['currentPassword', 'Current password', 'password'],
+              ['password', 'New password (optional)', 'password'],
+              ['confirm', 'Confirm new password', 'password'],
+            ].map(([k, l, t]) => (
+              <div className="mb-3" key={k}>
+                <label htmlFor={k} className="form-label">
+                  {l}
+                </label>
+                <input
+                  id={k}
+                  className="form-control"
+                  type={t}
+                  required={k === 'name' || k === 'email'}
+                  minLength={
+                    k === 'password' || k === 'confirm' ? 10 : undefined
+                  }
+                  maxLength={t === 'password' ? 72 : 254}
+                  autoComplete={
+                    k === 'password' || k === 'confirm'
+                      ? 'new-password'
+                      : k === 'currentPassword'
+                        ? 'current-password'
+                        : k
+                  }
+                  value={fields[k]}
+                  onChange={(e) =>
+                    setFields({ ...fields, [k]: e.target.value })
+                  }
+                />
+              </div>
+            ))}
+            <p className="small-note">
+              Enter your current password to change your email or password.
+            </p>
+            <button className="btn btn-primary" disabled={busy}>
+              Save changes
+            </button>
+          </form>
+        </div>
+        <div className="panel">
+          <h2>My demo orders</h2>
+          {isLoading ? (
+            <Loader />
+          ) : error ? (
+            <p role="alert">{error?.data?.message}</p>
+          ) : orders?.length ? (
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((o) => (
+                    <tr key={o._id}>
+                      <td>#{o._id.slice(0, 8).toUpperCase()}</td>
+                      <td>{date(o.createdAt)}</td>
+                      <td>{money(o.totalPrice)}</td>
+                      <td>
+                        <span
+                          className={`status-pill ${o.demoCompleted ? 'complete' : ''}`}
+                        >
+                          {o.demoCompleted ? 'Demo completed' : 'Pending'}
+                        </span>
+                      </td>
+                      <td>
+                        <Link to={`/order/${o._id}`}>View →</Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="empty-state">
+              <h3>No orders yet.</h3>
+              <p>Add a product to your cart and try the checkout flow.</p>
+              <Link to="/" className="btn btn-primary">
+                Explore products
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}

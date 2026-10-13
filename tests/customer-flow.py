@@ -1,6 +1,6 @@
 import urllib.request,urllib.error,http.cookiejar,json,uuid,secrets,concurrent.futures,pathlib,time
 import os
-BASE=os.environ.get('TECHSHOP_TEST_URL','http://127.0.0.1:5173').rstrip('/')
+BASE=os.environ['TECHSHOP_TEST_URL'].rstrip('/')
 checks=[]
 def request(path,method='GET',data=None,jar=None,headers=None):
  opener=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar)) if jar is not None else urllib.request.build_opener()
@@ -17,6 +17,7 @@ def check(name,condition):
  assert condition,name
  checks.append(name);print('PASS',name,flush=True)
 
+code,config,_=request('/api/config');check('explicit demo target',code==200 and config.get('demo') is True)
 a=http.cookiejar.CookieJar();b=http.cookiejar.CookieJar();tag=uuid.uuid4().hex[:10];pw=secrets.token_urlsafe(18)
 email='qa-'+tag+'@techshop.demo'
 code,user,h=request('/api/users','POST',{'name':'Demo Verification','email':email,'password':pw,'isAdmin':True},a)

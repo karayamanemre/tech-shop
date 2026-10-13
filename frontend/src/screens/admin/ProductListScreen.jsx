@@ -53,13 +53,13 @@ const ProductListScreen = () => {
   return (
     <>
       <Meta title={'TechShop Products'} />
-      <Row className='align-items-center'>
+      <Row className="align-items-center">
         <Col>
           <h1>Products</h1>
         </Col>
-        <Col className='text-end'>
+        <Col className="text-end">
           <Button
-            className='btn-sm m-3'
+            className="btn-sm m-3"
             onClick={createProductHandler}
             style={{
               backgroundColor: '#D3592A',
@@ -81,10 +81,12 @@ const ProductListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
                 <th>ID</th>
@@ -105,16 +107,16 @@ const ProductListScreen = () => {
                   <td>{product.brand}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant='light' className='btn-sm mx-2'>
-                        <FaEdit aria-label='Edit' />
+                      <Button variant="light" className="btn-sm mx-2">
+                        <FaEdit aria-label="Edit" />
                       </Button>
                     </LinkContainer>
                     <Button
-                      variant='danger'
-                      className='btn-sm'
+                      variant="danger"
+                      className="btn-sm"
                       onClick={() => deleteHandler(product._id)}
                     >
-                      <FaTrash aria-label='Remove' />
+                      <FaTrash aria-label="Remove" />
                     </Button>
                   </td>
                 </tr>

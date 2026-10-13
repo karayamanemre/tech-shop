@@ -1,8 +1,11 @@
 # TechShop
 
+[**Live demo →**](https://tech-shop-teal.vercel.app)
+
 A modern technology store portfolio demo by **Emre Karayaman**. Explore 24 products with 61 product photographs, filter by category, compare prices, and complete a simulated purchase with persistent order history.
 
 > This is a portfolio demonstration. Prices, inventory, shipping and tax are illustrative. No real payment is collected and no goods are shipped. Use fictional delivery details.
+
 
 ## Stack
 
@@ -27,7 +30,7 @@ The original 2023 MERN implementation was modernized for Vercel. The unavailable
 
 ## Local setup
 
-Requires Node.js 22.12+ and npm. Link to the intended Vercel project and obtain development environment variables before database commands.
+Requires Node.js 22.12+ and npm. Before local development, connect a separate Neon branch and Blob store to the project’s **Development** environment, then pull those environment variables. The deployed Production / Preview connections do not automatically create Development credentials. Never seed a production database for local tests.
 
 ```sh
 npm ci
@@ -52,6 +55,8 @@ npm test
 npm run build:frontend
 npm audit
 ```
+
+Validation performed on the deployed application: 27 customer/security checks, 15 administrator/storage checks, 4 focused business-rule tests, successful Vite build and zero reported npm audit vulnerabilities. Tests used fictional accounts and demo orders; no real payments were submitted.
 
 `GET /api/health` verifies the actual database connection. `GET /api/config` describes the demo rules. Build fails when the database is unavailable rather than publishing a nonfunctional storefront.
 

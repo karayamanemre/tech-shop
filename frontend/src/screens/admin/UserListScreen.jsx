@@ -35,9 +35,11 @@ const UserListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
+        <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>
               <th>ID</th>
@@ -64,7 +66,7 @@ const UserListScreen = () => {
                 </td>
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                    <Button variant='light' className='btn-sm'>
+                    <Button variant="light" className="btn-sm">
                       <FaEdit
                         style={{
                           marginRight: '5px',
@@ -74,14 +76,14 @@ const UserListScreen = () => {
                     </Button>
                   </LinkContainer>
                   <Button
-                    variant='danger'
-                    className='btn-sm'
+                    variant="danger"
+                    className="btn-sm"
                     onClick={() => deleteHandler(user._id)}
                     style={{
                       marginLeft: '5px',
                     }}
                   >
-                    <FaTrash aria-label='Remove' />
+                    <FaTrash aria-label="Remove" />
                   </Button>
                 </td>
               </tr>

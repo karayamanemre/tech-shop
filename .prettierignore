@@ -1,0 +1,7 @@
+node_modules
+frontend/dist
+.vercel
+.env*
+frontend/public
+package-lock.json
+frontend/package-lock.json

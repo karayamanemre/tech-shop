@@ -3,9 +3,7 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "frontend/dist",
-  "regions": [
-    "fra1"
-  ],
+  "regions": ["fra1"],
   "functions": {
     "api/index.js": {
       "maxDuration": 30
