@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -16,6 +16,7 @@ import Meta from '../../components/Meta';
 
 const ProductListScreen = () => {
   const { pageNumber = 1 } = useParams();
+  const navigate = useNavigate();
   const { data, isLoading, error, refetch } = useGetProductsQuery({
     pageNumber,
   });
@@ -27,10 +28,10 @@ const ProductListScreen = () => {
     useDeleteProductMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Bu ürünü kaldırmak istediğine emin misin?')) {
+    if (window.confirm('Are you sure you want to remove this product?')) {
       try {
         await deleteProduct(id).unwrap();
-        toast.success('Ürün kaldırıldı');
+        toast.success('Product removed');
         refetch();
       } catch (error) {
         toast.error(error?.data?.message || error.error);
@@ -39,10 +40,10 @@ const ProductListScreen = () => {
   };
 
   const createProductHandler = async () => {
-    if (window.confirm('Yeni ürün eklemek istediğine emin misin?')) {
+    if (window.confirm('Are you sure you want to add a new product?')) {
       try {
-        await createProduct().unwrap();
-        refetch();
+        const created = await createProduct().unwrap();
+        navigate(`/admin/product/${created._id}/edit`);
       } catch (error) {
         toast.error(error?.data?.message || error.error);
       }
@@ -54,7 +55,7 @@ const ProductListScreen = () => {
       <Meta title={'TechShop Products'} />
       <Row className='align-items-center'>
         <Col>
-          <h1>Ürünler</h1>
+          <h1>Products</h1>
         </Col>
         <Col className='text-end'>
           <Button
@@ -71,7 +72,7 @@ const ProductListScreen = () => {
                 marginRight: '5px',
               }}
             />
-            Ürün ekle
+            Add product
           </Button>
         </Col>
       </Row>
@@ -86,11 +87,11 @@ const ProductListScreen = () => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th>Kod</th>
-                <th>AD</th>
-                <th>FİYAT</th>
-                <th>KATEGORİ</th>
-                <th>MARKA</th>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>CATEGORY</th>
+                <th>BRAND</th>
                 <th></th>
               </tr>
             </thead>
@@ -105,7 +106,7 @@ const ProductListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant='light' className='btn-sm mx-2'>
-                        <FaEdit aria-label='Düzenle' />
+                        <FaEdit aria-label='Edit' />
                       </Button>
                     </LinkContainer>
                     <Button
@@ -113,7 +114,7 @@ const ProductListScreen = () => {
                       className='btn-sm'
                       onClick={() => deleteHandler(product._id)}
                     >
-                      <FaTrash aria-label='Kaldır' />
+                      <FaTrash aria-label='Remove' />
                     </Button>
                   </td>
                 </tr>

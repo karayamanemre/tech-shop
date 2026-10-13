@@ -44,22 +44,22 @@ const LoginScreen = () => {
   return (
     <FormContainer>
       <Meta title={'TechShop'} />
-      <h1>Giriş yap</h1>
+      <h1>Sign in</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email' className='my-3'>
-          <Form.Label>E-posta</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type='email' required autoComplete='email'
-            placeholder='E-posta adresin'
+            placeholder='Your email address'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId='password' className='my-3'>
-          <Form.Label>Şifre</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type='password' required minLength={10} maxLength={72}
-            placeholder='En az 10 karakter'
+            placeholder='At least 10 characters'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
@@ -81,7 +81,7 @@ const LoginScreen = () => {
             to={redirect ? `/register?redirect=${redirect}` : '/register'}
             className='text-decoration-none'
           >
-            Hesap oluştur
+            Create account
           </Link>
         </Col>
       </Row>

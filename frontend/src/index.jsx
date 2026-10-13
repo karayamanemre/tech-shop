@@ -45,7 +45,7 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
-      <Route path='*' element={<div className='empty-state'><h1>Bu sayfa bulunamadı.</h1><a href='/'>Koleksiyona dön →</a></div>} />
+      <Route path='*' element={<div className='empty-state'><h1>This page could not be found.</h1><a href='/'>Back to the collection →</a></div>} />
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/shipping' element={<ShippingScreen />} />

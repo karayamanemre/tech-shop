@@ -30,7 +30,7 @@ const UserListScreen = () => {
   return (
     <>
       <Meta title={'TechShop Users'} />
-      <h1>Kullanıcılar</h1>
+      <h1>Users</h1>
       {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
@@ -40,8 +40,8 @@ const UserListScreen = () => {
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
-              <th>Kod</th>
-              <th>AD</th>
+              <th>ID</th>
+              <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
               <th></th>
@@ -81,7 +81,7 @@ const UserListScreen = () => {
                       marginLeft: '5px',
                     }}
                   >
-                    <FaTrash aria-label='Kaldır' />
+                    <FaTrash aria-label='Remove' />
                   </Button>
                 </td>
               </tr>

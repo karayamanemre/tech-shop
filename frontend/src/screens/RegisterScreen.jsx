@@ -36,7 +36,7 @@ const RegisterScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Şifreler eşleşmiyor');
+      toast.error('Passwords do not match');
       return;
     } else {
       try {
@@ -51,43 +51,43 @@ const RegisterScreen = () => {
   return (
     <FormContainer>
       <Meta title={'TechShop'} />
-      <h1>Hesap oluştur</h1>
+      <h1>Create account</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name' className='my-3'>
-          <Form.Label>Ad soyad</Form.Label>
+          <Form.Label>Full name</Form.Label>
           <Form.Control
             type='text' required minLength={2} maxLength={80}
-            placeholder='Adın soyadın'
+            placeholder='Your full name'
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group controlId='email' className='my-3'>
-          <Form.Label>E-posta</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type='email' required autoComplete='email'
-            placeholder='E-posta adresin'
+            placeholder='Your email address'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group controlId='password' className='my-3'>
-          <Form.Label>Şifre</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type='password' required minLength={10} maxLength={72}
-            placeholder='En az 10 karakter'
+            placeholder='At least 10 characters'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group controlId='confirmPassword' className='my-3'>
-          <Form.Label>Şifre tekrar</Form.Label>
+          <Form.Label>Confirm password</Form.Label>
           <Form.Control
             type='password' required minLength={10} maxLength={72}
-            placeholder='Şifreni tekrar gir'
+            placeholder='Confirm your password'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
@@ -109,7 +109,7 @@ const RegisterScreen = () => {
             to={redirect ? `/login?redirect=${redirect}` : '/login'}
             className='text-decoration-none'
           >
-            Giriş yap
+            Sign in
           </Link>
         </Col>
       </Row>

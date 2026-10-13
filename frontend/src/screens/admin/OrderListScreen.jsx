@@ -13,7 +13,7 @@ const OrderListScreen = () => {
   return (
     <>
       <Meta title={'TechShop Orders'} />
-      <h1>Demo siparişler</h1>
+      <h1>Demo orders</h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -22,12 +22,12 @@ const OrderListScreen = () => {
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
-              <th>Kod</th>
+              <th>ID</th>
               <th>User</th>
               <th>Date</th>
               <th>Total</th>
-              <th>Paid</th>
-              <th>Delivered</th>
+              <th>Demo completed</th>
+              <th>Demo delivered</th>
               <th></th>
             </tr>
           </thead>
